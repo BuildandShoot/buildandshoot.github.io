@@ -1,0 +1,26 @@
+<div class="ad-container">
+    <!-- {{ include.name }} -->
+    <ins class="adsbygoogle{% if include.class %} {{ include.class }}{% endif %}"
+         style="display:block;text-align:center;"
+         data-ad-client="{{ site.adsense_client }}"
+         data-ad-slot="{{ include.id }}"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+{% if include.adblock %}
+<div class="ad-blocked{% if include.class %} {{ include.class }}{% endif %}" style="display:none;">
+    <div class="row">
+        <div class="col-lg-1">
+            <img src="/assets/images/dead_icon.png">
+        </div>
+        <div class="col-lg-11">
+            <div class="message">
+                <p>Please consider adding Build and Shoot to your adblock whitelist!</p>
+                <p>Ads help to support both the development and hardware costs for the site and game.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

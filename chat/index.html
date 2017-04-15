@@ -1,0 +1,28 @@
+---
+layout: default
+title: Chat
+---
+
+<div class="container">
+
+    {% include ad_responsive.html id='5441033495' name='BnS Chat Header' class='leaderboard-lg leaderboard-md leaderboard-sm banner-xs centered-xs ad-pull-top' %}
+
+    <div class="row">
+
+        <div class="col-md-10" data-adblock-class="hidden-xs">
+            <iframe id="chat" src="" width="100%" height="600"></iframe>
+        </div>
+
+        <div class="col-md-2 hidden-sm hidden-xs" data-adblock-class="col-xs-12">
+            {% include ad_responsive.html id='9871233091' name='BnS Chat Skyscraper' class='skyscraper-lg skyscraper-md hidden-sm hidden-xs' %}
+        </div>
+        
+    </div>
+
+    {% include ad_responsive.html id='8394499897' name='BnS Chat Footer' class='hidden-lg hidden-md leaderboard-sm mobile-xs centered-xs ad-pull-bottom' %}
+
+</div>
+
+<script type="text/javascript">
+    $("#chat").attr("src", "http://webchat.quakenet.org/?nick=Deuce" + Math.floor((Math.random() * 1000) + 1) + "&channels=buildandshoot&lightness=-95&thue=0&tlightness=100&tsaturation=-100&prompt=0");
+</script>

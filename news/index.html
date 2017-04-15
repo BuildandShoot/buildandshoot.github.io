@@ -1,0 +1,256 @@
+---
+layout: default
+title: News
+mustacheSetDelimiter: "{{={u{ }u}=}}"
+js:
+    - "/vendor/mustache/mustache.min.js"
+---
+
+<div class="container">
+
+    {% include ad_responsive.html id='6160887094' name='BnS News Header' adblock='true' class='leaderboard-lg leaderboard-md leaderboard-sm banner-xs centered-xs ad-pull-top' %}
+
+    <div class="row">
+
+        <div class="col-md-10 col-sm-12" data-adblock-class="col-sm-12">
+
+            <h2 class="heading">News</h2>
+            <div class="heading-hr" id="heading-hr"></div>
+
+            <div id="loading-placeholder">
+                <div class="text-center">
+                    <img src="/assets/images/spin.gif" />
+                    <h3>Loading News...</h3>  
+                </div>
+            </div>
+
+            <a name="post" href="#"></a>
+
+            <div class="news-navigation">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="news-previous"></h4>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="news-next"></h4>
+                </div></div>
+            </div>
+
+            <br />
+
+            <div id="post-container"></div>
+        </div>
+
+        <div class="col-md-2 hidden-sm" data-adblock-class="hidden-xs">
+            {% include ad_responsive.html id='9114353495' name='BnS News Skyscraper' class='skyscraper-lg skyscraper-md hidden-sm hidden-xs' %}
+        </div>
+
+    </div>
+
+    {% include ad_responsive.html id='7637620299' name='BnS News Footer' class='leaderboard-lg leaderboard-md leaderboard-sm mobile-xs centered-xs ad-pull-bottom' %}
+
+</div>
+
+<script id="news-template" type="text/template">
+<div id="{u{id}u}" class="news-post">
+
+    <h4 class="news-title">{u{& title}u}</h4>
+        <ul class="post-meta text-center">
+            <li class="post-meta-item"><i class="fa fa-calendar" aria-hidden="true"></i> {u{& date}u}</li>
+            <li class="post-meta-item">&bull;</li>
+            <li class="post-meta-item">Posted By: <img id="avatar-{u{id}u}" width="18px" height="18px"> <a href="{u{author_url}u}">{u{author}u}</a></li>
+            <li class="post-meta-item">&bull;</li>
+            <li class="post-meta-item"><i class="fa fa-comments" aria-hidden="true"></i> <a href="{u{link}u}">{u{replies}u} Replies</a></li>
+        </ul>
+
+        <div class="content">{u{& content}u}</div>
+</div>
+</script>
+
+<script type="text/javascript">
+var truncatePosts = false;
+var currentPost = 0;
+var posts = [];
+
+$(document).ready(function () {
+    updateNews();
+});
+
+function updateNews() {
+
+    $.get(httpsify("http://buildandshoot.com/forums/app.php/feed/news"), function(data) {
+        var $XML = $(data);
+        
+        var template = $('#news-template').html();
+
+        var months = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"];
+
+        $XML.find("entry").each(function() {
+            var $this = $(this),
+                postData = {
+                    title:       $this.find("title").text(),
+                    link:        $this.find("link").attr("href"),
+                    published:   $this.find("published").text(),
+                    author:      $this.find("author").text(),
+                    content:     $this.find("content").text()
+            };
+
+            var contents = postData.content;
+
+            var stats = contents.substring(contents.lastIndexOf('<p>'));
+            var statsSplit = stats.split(" — ");
+            contents = contents.replace(stats, '');
+
+            var replies = statsSplit[2].substring(8);
+            var authorUrl = statsSplit[0].substring(statsSplit[0].indexOf('"') + 1, statsSplit[0].lastIndexOf('"')).replace('&amp;', '&');
+
+            var id = "post-" + postData.link.substring(postData.link.indexOf("#")+1);
+
+            var published = new Date(postData.published);
+
+            var templateData = {
+                id : id,
+                title : postData.title,
+                date : months[published.getMonth()] +' '+ published.getDate() + ', ' +published.getFullYear(),
+                author : postData.author,
+                author_url: fix_migration_url(decodeURI(authorUrl)),
+                content : httpsify(contents),
+                link : fix_migration_url(postData.link),
+                replies : replies
+            };
+
+            var post = $(Mustache.render("{{page.mustacheSetDelimiter}} " + template, templateData));
+            normalize_post(post, id, fix_migration_url(postData.link))
+            set_author_avatar(templateData.author, templateData.id, post);
+
+            posts.push({
+                data : postData,
+                dom : post
+            });
+        });
+
+        if (posts.length > 0) {
+            $("#loading-placeholder").hide();
+            displayPost(currentPost);        
+        }     
+    });
+}
+
+function displayPost(index) {
+    var post = posts[index];
+    $("#post-container").html(post.dom);
+
+    if (index < posts.length - 1)
+        $(".news-previous").html('<a href="#top" onClick="javascript:previousPost();">&laquo; ' + posts[index + 1].data.title + '</a>');
+    else
+        $(".news-previous").html("");
+
+    if (index > 0)
+        $(".news-next").html('<a href="#top" onClick="javascript:nextPost();"">&raquo; ' + posts[index - 1].data.title + '</a>');
+    else
+        $(".news-next").html("");  
+}
+
+function nextPost() {
+    displayPost(--currentPost);
+}
+
+function previousPost() {
+    displayPost(++currentPost);
+}
+
+// converts url to post-migration url (buildandshoot.com/url -> buildandshoot.com/forums/url)
+function fix_migration_url(url) {
+    if (url.includes("buildandshoot.com/forums"))
+        return url;
+    return url.replace("buildandshoot.com", "buildandshoot.com/forums");
+}
+
+function normalize_post(post, id, url) {
+    var contents = post.find(".content");
+
+    // remove horizontal rules and neighboring breaks
+    $("hr", contents).each(function(index) {
+        $(this).prev().remove();
+        $(this).next().remove();
+        $(this).remove();
+    });
+
+    var truncated = false;
+
+    if (truncatePosts) {
+
+        var lastBreak = $('br:nth-of-type(8)', post);
+
+        // first remove text nodes 
+        contents.contents().filter(function(index) {
+            return this.nodeType == 3 && index >= lastBreak.index();
+        }).remove();
+
+        lastBreak.nextAll().remove();   
+        truncated = true;
+
+        contents.append('<br><br>');
+        contents.append('<a href="' + url + '">Continue Reading...</a> <i class="fa fa-arrow-right" aria-hidden="true"></i>');
+    }
+
+    // fix relative urls
+    $("a[href*=#]", contents).each(function(index) {
+        var anchor = $(this).attr("href");
+        if (truncated) {
+            $(this).attr("href", url.substring(0, url.indexOf('#')) + $(this).attr("href"));        
+        }
+        else {
+            var anchor = anchor.replace(' ', '_');
+            $(this).attr("href", "#" + id + anchor.substring(1, anchor.length));
+        }
+    });
+
+    $("a[name]", contents).each(function(index) {
+        if (!truncated) {
+            var anchor = $(this).attr("name").replace(' ', '_');
+            $(this).attr("name", id + anchor);
+        }
+    });
+
+    // center externally hosted images and make them resonsive
+    $("img:not([src*='buildandshoot.com/forums/'])", contents).each(function(index) {
+        $(this).addClass("center-block");
+        $(this).addClass("img-responsive");
+    });
+
+    // fix relative image paths
+    $("img[src*='./../.']", contents).each(function(index) {
+        $(this).attr("src", $(this).attr("src").replace("./../.", ""));
+    });
+
+    // fix migrated urls
+    $("a", contents).prop("href", function(index, old) {
+        if (!old.includes("#post-")) // ignore anchors
+            return fix_migration_url(old);
+      }
+    );
+
+    $("img", contents).prop("src", function(index, old) {
+        return fix_migration_url(old);
+      }
+    );
+}
+
+var avatars = ["blueie.png", "greenjd.png", "greyo.png", "orangeb.png", "purplez.png", "redym.png", "yellowlm.png"];
+var authorMap = {};
+
+function set_author_avatar(author, postID, post) {
+    if (!(author in authorMap)) {
+        var r = Math.floor(Math.random()*avatars.length);
+        authorMap[author] = avatars[r];
+        if (r >= 0 && avatars.length > 1) {
+            avatars.splice(r, 1);
+        }
+    }
+
+    var avatar = authorMap[author];
+    $("#avatar-" + postID, post).attr("src", "/assets/images/avatars/" + avatar);
+}
+</script>

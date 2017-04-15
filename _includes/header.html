@@ -1,0 +1,56 @@
+<a name="top"></a>
+
+<nav class="navbar navbar-inverse navbar-custom" role="navigation">
+
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar"> <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="navbar-brand visible-xs-inline"><span><img src="/assets/images/brand-icon.png"></span> Build and Shoot</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="{{ site.baseurl }}/">
+                    <span class="visible-xs">Home</span>
+                    <img class="nav-home{% if page.url == '/' %} nav-active{% endif %} visible-sm visible-md visible-lg" src="/assets/images/blank.gif">
+                </a>
+            </li>
+            <li>
+                <a href="{{ site.baseurl }}/news/">
+                    <span class="visible-xs">News</span>
+                    <img class="nav-news{% if page.url == '/news/' %} nav-active{% endif %} visible-sm visible-md visible-lg" src="/assets/images/blank.gif">
+                </a>
+            </li>
+            <li>
+                <a href="{{ site.baseurl }}/servers/">
+                    <span class="visible-xs">Servers</span>
+                    <img class="nav-servers{% if page.url == '/servers/' %} nav-active{% endif %} visible-sm visible-md visible-lg" src="/assets/images/blank.gif">
+                </a>
+            </li>
+            <li>
+                <a href="{{ site.baseurl }}/download/">
+                    <span class="visible-xs">Download</span>
+                    <img class="nav-download{% if page.url == '/download/' %} nav-active{% endif %} visible-sm visible-md visible-lg" src="/assets/images/blank.gif">
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="visible-xs">Social <b class="caret"></b></span>
+                    <span class="visible-sm visible-md visible-lg"><img class="nav-social" src="/assets/images/blank.gif"> <b class="caret"></b></span>
+                </a>
+                <ul class="dropdown-menu social-menu">
+                    <li><a href="/forums/"><i class="fa fa-users fa-fw"></i> Forums</a></li>
+                    <li><a href="/chat/"><i class="fa fa-comments fa-fw"></i> Chat</a></li>
+                    <li><a href="https://facebook.com/buildandshoot"><i class="fa fa-facebook fa-fw"></i> Facebook</a></li>
+                    <li><a href="https://steamcommunity.com/groups/buildandshoot"><i class="fa fa-steam fa-fw"></i> Steam</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+
+</nav>

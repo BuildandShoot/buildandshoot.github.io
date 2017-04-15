@@ -1,0 +1,32 @@
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Build and Shoot" />
+    <meta name="keywords" content="Ace,Of,Spades,prototype,Minecraft,Team Fortress,Ben Aksoy,Voxlap,free,online,multiplayer,build,building,game,shoot,shooting,shooter,fps,blocks,guns,smg,shotgun,rifle,voxel" />
+    <meta name="description" content="Build and Shoot is a player-run community for the online voxel FPS game based on Ace of Spades Classic. Login to play the game, interact with players, and customize your experience - it's all 100% free!" />
+    <title>Build and Shoot{% if page.title %} &bull; {{ page.title }}{% endif %}</title>
+    <link rel="shortcut icon" href="/assets/images/favicon.png">
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+{% if page.css %}
+{% for stylesheet in page.css %}
+    <link rel="stylesheet" href="{{ stylesheet }}" media="screen" type="text/css">
+{% endfor %}
+{% endif %}
+    <link rel="stylesheet" href="/assets/css/main.css">
+{% if page.js %}
+{% for script in page.js %}
+    <script src='{{ script }}' type="text/javascript"></script>
+{% endfor %}
+{% endif %}
+    <script src="/assets/js/main.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>

@@ -1,0 +1,524 @@
+---
+layout: default
+title: Servers
+mustacheSetDelimiter: "{{={u{ }u}=}}"
+
+css:
+    - "/assets/css/flags.min.css"
+    - "/vendor/select2/css/select2.min.css"
+    - "/vendor/select2-bootstrap-theme/select2-bootstrap.css"
+js:
+    - "/vendor/tinysort/jquery.tinysort.js"
+    - "/vendor/mustache/mustache.min.js"
+    - "/vendor/select2/js/select2.min.js"
+---
+
+<div class="container">
+
+    {% include ad_responsive.html id='5580634295' name='BnS Serverlist Header' adblock='true' class='leaderboard-lg leaderboard-md leaderboard-sm banner-xs centered-xs ad-pull-top' %}
+    
+    <div class="row">
+
+        <div class="col-md-10 col-sm-12" data-adblock-class="col-xs-12">
+
+            <h2 class="heading">Public Servers</h2>
+            <div class="heading-hr"></div>
+
+            <div id="loading-placeholder" class="text-center">
+                <h3 id="load-status">Loading Servers...</h3>
+            </div>
+    
+            <div id="filters-container" style="visibility:hidden">
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h4>Location</h4>
+                        <select id="filter-countries" multiple="multiple" class="form-control server-filter" data-width="100%"></select>
+                    </div>
+                    <div class="col-sm-3">
+                        <h4>Game Modes</h4>
+                        <select id="filter-modes" multiple="multiple" class="form-control server-filter" data-width="100%"></select>
+                    </div>
+                    <div class="col-sm-3">
+                        <h4>Map</h4>
+                        <select id="filter-maps" multiple="multiple" class="form-control server-filter" data-width="100%"></select>
+                    </div>
+                    <div class="col-sm-3">
+                        <h4>Game Version</h4>
+                        <select id="filter-versions" multiple="multiple" class="form-control server-filter" data-width="100%"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <h4>Search</h4>
+                            <input class="form-control" id="server-search" placeholder="Search..." type="text">
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-sm-3">
+                        <div class="checkbox" style="padding-top: 10px;">
+                            <label><input type="checkbox" id="filter-empty" checked> Empty Servers
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="filter-full" checked> Full Servers
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary block-btn" id="filter-reset" disabled>Reset Filters</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="filter-placeholder" class="text-center" style="display:none">
+                <h3>No servers match your search...</h3>
+            </div>
+
+            <div id="serverlist-container" style="visibility:hidden">
+                <div class="table-responsive" id="">
+                    <table class="table servers-table">
+                        <thead>
+                            <tr id="server-columns">
+                                <th id="col-slots" class="server-column"><a href="#" onclick="sortServers('slots')"><i id="sort-slots" class="fa fa-sort-desc" aria-hidden="true" style="visiblity: hidden"></i> Slots</a></th>
+                                <th id="col-name" class="server-column"><a href="#" onclick="sortServers('name')"><i id="sort-name" class="fa fa-sort-desc" aria-hidden="true" style="visiblity: hidden"></i> Name</a></th>
+                                <th id="col-mode" class="server-column"><a href="#" onclick="sortServers('mode')"><i id="sort-mode" class="fa fa-sort-desc" aria-hidden="true" style="visiblity: hidden"></i> Mode</a></th>
+                                <th id="col-map" class="server-column"><a href="#" onclick="sortServers('map')"><i id="sort-map" class="fa fa-sort-desc" aria-hidden="true" style="visiblity: hidden"></i> Map</a></th>
+                                <th id="col-version" class="server-column"><a href="#" onclick="sortServers('version')"><i id="sort-version" class="fa fa-sort-desc" aria-hidden="true" style="visiblity: hidden"></i> Version</a></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="servers-container">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-2 hidden-sm" data-adblock-class="hidden-xs">
+            {% include ad_responsive.html id='7057367490' name='BnS Serverlist Skyscraper' class='skyscraper-lg skyscraper-md hidden-sm hidden-xs ad-left' %}
+        </div>
+    </div>
+
+    {% include ad_responsive.html id='6702820294' name='BnS Serverlist Footer' class='leaderboard-lg leaderboard-md leaderboard-sm mobile-xs centered-xs ad-pull-bottom' %}
+
+</div>
+
+<script id="server-template" type="text/template">
+<tr class="server-row" data-players="{u{players}u}">
+    <td class="col-slots server-cell">{u{players}u}/{u{slots}u}</td>
+    <td class="col-name server-cell"><img class="flag flag-{u{country_code}u}" src="/assets/images/blank.gif" title="{u{country_name}u}" /> {u{name}u}</td>
+    <td class="col-mode server-cell">{u{game_mode}u}</td>
+    <td class="col-map server-cell">{u{map}u}</td>
+    <td class="col-version server-cell">{u{game_version}u}</td>
+    <td class="col-connect"><a href="{u{link}u}" class="btn btn-success block-btn"><i class="fa fa-play"></i> Connect</a></td>
+</tr>
+</script>
+
+<script id="direct-template" type="text/template">
+<tr class="server-row">
+    <td class="text-center"></td>
+    <td class="server-cell text-center" colspan="4"><i class="fa fa-server" aria-hidden="true"></i> Direct Connect</td>
+    <td class="col-connect"><a href="#" class="btn btn-success block-btn" data-toggle="modal" data-target="#direct-modal"><i class="fa fa-play"></i> Connect</a></td>
+</tr>
+</script>
+
+<div id="direct-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button btn-submit btn-block" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Direct Connect</h4>
+            </div>
+            <div class="modal-body">
+                <p>Use this to connect to a locally-hosted server.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary block-btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var userIP;
+var typeTimer = 0;
+var ignoreFilterEvents = true;
+var sortDirection = 'desc';
+
+var servers = {};
+
+var refreshCount = 0;
+
+var serverRowTemplate = $('#server-template').html();
+
+var directServer = {
+name: "LocalHost",
+identifier: "aos://16777343",
+map: "",
+game_mode: "",
+country: "",
+latency: 0,
+players_current: "N",
+players_max: "A",
+last_updated: 0,
+game_version: ""
+};
+
+
+var $directServerRow = $(Mustache.render("{{page.mustacheSetDelimiter}} " + $('#direct-template').html()));
+$directServerRow.addClass("direct");
+$directServerRow.attr("id", "direct-server");
+
+function initServerlist() {
+    ignoreFilterEvents = true;
+
+    $("#server-search").keyup(function (){
+        if (typeTimer)
+            clearTimeout(typeTimer);
+        typeTimer = setTimeout(filterServers, 300);
+    });
+
+    ignoreFilterEvents = false;
+}
+
+function gotIP(ip) {
+    userIP = ip;
+}
+
+function filterServers() {
+
+    if (ignoreFilterEvents)
+        return;
+
+    var countryFilters = $("#filter-countries").val();
+    var modeFitlers = $("#filter-modes").val();
+    var mapFilters = $("#filter-maps").val();
+    var versionFilters = $("#filter-versions").val();
+
+    var hideEmpty = !$('#filter-empty').is(':checked');
+    var hideFull = !$('#filter-full').is(':checked');
+
+    var searchQuery = $("#server-search").val();
+
+    var isFilterSet = countryFilters != null || modeFitlers != null || mapFilters != null || versionFilters != null || searchQuery.length != 0 || hideEmpty || hideFull;
+
+    var visibleCount = 0;
+
+    $(".server-row").each(function () {
+
+        var identifier = $(this).children(".col-connect").children("a").attr("href").split(":", 3).join(":");
+        var server = servers[identifier];
+
+        if (server === undefined)
+            return true;
+
+        var filterMatches = true;
+
+        if ((hideEmpty && server.players_current == 0 ) || (hideFull && server.players_current == server.players_max))
+            filterMatches = false;
+
+        if (filterMatches && countryFilters != null && !arrayContains(server.country, countryFilters))
+            filterMatches = false;
+
+        if (filterMatches && modeFitlers != null && !arrayContains(server.game_mode, modeFitlers))
+            filterMatches = false;
+
+        if (filterMatches && mapFilters != null && !arrayContains(server.map, mapFilters))
+            filterMatches = false;
+
+        if (filterMatches && versionFilters != null && !arrayContains(server.game_version, versionFilters))
+            filterMatches = false;
+
+        if (filterMatches && searchQuery.length > 0 && !stringContainsAny(searchQuery, [server.name, server.game_mode, server.map, server.game_version, server.identifier]))
+            filterMatches = false;
+
+        if (filterMatches) {
+            visibleCount++;
+            $(this).show();
+        }
+        else
+            $(this).hide();
+    });
+
+    if (isFilterSet) {
+        $("#filter-reset").removeAttr("disabled");
+        $("#direct-server").hide();
+    }
+    else {
+        $("#filter-reset").attr("disabled", "disabled");
+        $("#direct-server").show();
+    }
+
+    if (visibleCount > 0) {
+        $("#filter-placeholder").hide();
+        $("#serverlist-container").css("visibility", "visible");
+    }
+    else {
+        $("#filter-placeholder").show();
+        $("#serverlist-container").css("visibility", "hidden");
+    }
+}
+
+function formatCountries (state) {
+  if (!state.id) { return state.text; }
+  var $state = $(
+    '<span><img class="flag flag-' + state.element.value.toLowerCase() + '" src="/assets/images/blank.gif" /> ' + state.text + '</span>'
+  );
+  return $state;
+};
+
+function updateCountryFilter(servers) {
+    $("#filter-countries").empty();
+
+    var countries = [];
+
+    servers.sort(function(a,b) {return (a.country > b.country) ? 1 : ((b.country > a.country) ? -1 : 0);} ); 
+
+    for (var i = 0; i < servers.length; i++) {
+        var country = servers[i].country;
+        var name = getCountryName(servers[i].country);
+        if (countries.indexOf(country) < 0) {
+            countries.push(country);
+            $('#filter-countries').append($('<option></option>').val(country.toLowerCase()).html(name));
+        }
+    }
+}
+
+function updateModeFilter(servers) {
+    $("#filter-modes").empty();
+
+    var game_modes = [];
+    servers.sort(function(a,b) {return (a.game_mode > b.game_mode) ? 1 : ((b.game_mode > a.game_mode) ? -1 : 0);} ); 
+
+    for (var i = 0; i < servers.length; i++) {
+        var game_mode = servers[i].game_mode;
+        if (game_modes.indexOf(game_mode) < 0) {
+            game_modes.push(game_mode);
+            $('#filter-modes').append($('<option></option>').val(game_mode).html(game_mode));
+        }
+    }
+}
+
+function updateMapFilter(servers) {
+    $("#filter-maps").empty();
+
+    var maps = [];
+    servers.sort(function(a,b) {return (a.map > b.map) ? 1 : ((b.map > a.map) ? -1 : 0);} ); 
+
+    for (var i = 0; i < servers.length; i++) {
+        var map = servers[i].map;
+        if (maps.indexOf(map) < 0) {
+            maps.push(map);
+            $('#filter-maps').append($('<option></option>').val(map).html(map));
+        }
+    }
+}
+
+function updateVersionFilter(servers) {
+    $("#filter-versions").empty();
+
+    var game_versions = [];
+    servers.sort(function(a,b) {return (a.game_version > b.game_version) ? 1 : ((b.game_version > a.game_version) ? -1 : 0);} ); 
+
+    for (var i = 0; i < servers.length; i++) {
+        var game_version = servers[i].game_version;
+        if (game_versions.indexOf(game_version) < 0) {
+            game_versions.push(game_version);
+            $('#filter-versions').append($('<option></option>').val(game_version).html(game_version));  
+        }
+    }
+}
+
+function createServerRow(server) {
+    var templateData = {
+        name : server.name,
+        players : server.players_current,
+        slots : server.players_max,
+        game_mode : server.game_mode,
+        map : server.map,
+        country_code : server.country.toLowerCase(),
+        country_name : getCountryName(server.country),
+        game_version : server.game_version,
+        link: function() {
+            return server.identifier + ":" + server.game_version;
+        }
+    };
+
+    return Mustache.render("{{page.mustacheSetDelimiter}} " + serverRowTemplate, templateData);
+}
+
+function updateServerlist(servers) {
+
+    var table = $("#servers-container");
+
+    var rows = [];
+
+    for (var i = 0; i < servers.length; i++) {
+        var server = servers[i];
+        rows.push(createServerRow(server));
+    }
+
+    table.empty();
+
+    for (var i = 0; i < rows.length; i++) {
+        table.append(rows[i]);
+    }
+
+    if (rows.length == 0)
+    {
+        $("#serverlist-controls-container").hide();
+        $("#serverlistTable").hide();
+        $("#serverlist-empty").show();
+    }
+
+    else
+    {
+        $("#serverlist-controls-container").show();
+
+        $("#serverlistTable").show();
+        $("#serverlist-empty").hide();
+    }
+}
+
+function refreshServers() {
+    $("#loading-placeholder").show();
+
+    $("#serverlistTable").hide();
+    $.ajax({
+       type: 'GET',
+        url: httpsify('http://services.buildandshoot.com/serverlist.json'),
+        async: false,
+        jsonpCallback: 'jsonCallback',
+        contentType: "application/json",
+        dataType: 'jsonp',
+        success: function(response) {
+            var newServers = response;
+
+            if (newServers.length > 0) {
+                servers = {};
+                for (var i = 0; i < newServers.length; i++) {
+                    var server = newServers[i];
+                    servers[server.identifier] = server;
+                }
+
+                updateServerlist(newServers);
+                updateCountryFilter(newServers);
+                updateModeFilter(newServers);
+                updateMapFilter(newServers);
+                updateVersionFilter(newServers);
+
+                $("#loading-placeholder").hide();
+                $("#filters-container").css("visibility", "visible");
+                $("#serverlist-container").css("visibility", "visible");
+
+                refreshCount++;
+
+                if (refreshCount == 1) {
+                    $("#servers-container").prepend($directServerRow);
+                    sortServers('slots');
+                }
+            }
+        },
+        error: function(e) {
+            $("#load-status").text("Loading servers failed!");
+        }
+    });
+}
+
+function sortServers(col) {
+    $("#server-columns th i").css("visibility", "hidden");
+
+    if (col == "slots")
+        $('#servers-container>tr').tsort( { attr:'data-players', order:sortDirection} ); 
+    else
+        $('#servers-container>tr').tsort('.col-' + col, {order:sortDirection} );
+
+    var sortClass = 'fa fa-sort-' +  sortDirection;
+    $("#sort-" + col).attr("class", sortClass).css("visibility", "visible");
+
+    sortDirection = sortDirection == 'desc' ? 'asc' : 'desc';
+
+    $("#servers-container").prepend($directServerRow);
+
+    filterServers();
+}
+
+function resetFilters() {
+    ignoreFilterEvents = true;
+
+    $("#filter-countries").val("").trigger("change");
+    $("#filter-modes").val("").trigger("change");
+    $("#filter-maps").val("").trigger("change");
+    $("#filter-versions").val("").trigger("change");
+
+    $('#filter-empty').prop('checked', true);
+    $('#filter-full').prop('checked', true);
+
+    $("#server-search").val("");
+
+    ignoreFilterEvents = false;
+}
+
+$(".dropdown-menu li a").click(function(){
+  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+  $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+});
+
+$(document).ready(function() {
+
+    $("#filter-countries").select2({
+        placeholder: " All Countries",
+        allowClear: true,
+        theme: "bootstrap",
+        templateResult: formatCountries
+    }).change(function() {
+        filterServers();
+    });
+
+    $("#filter-modes").select2({
+        placeholder: " All Modes",
+        allowClear: true,
+        theme: "bootstrap"
+    }).change(function() {
+        filterServers();
+    });
+
+    $("#filter-maps").select2({
+        placeholder: " All Maps",
+        allowClear: true,
+        theme: "bootstrap"
+    }).change(function() {
+        filterServers();
+    });
+
+    $("#filter-versions").select2({
+        placeholder: " All Versions",
+        allowClear: true,
+        theme: "bootstrap"
+    }).change(function() {
+        filterServers();
+    });
+
+    $("#filter-empty").change(function() {
+        filterServers();
+    });
+
+    $("#filter-full").change(function() {
+        filterServers();
+    });
+
+    $("#filter-reset").click(function() {
+        resetFilters();
+        filterServers();
+    });
+
+    getip(gotIP);
+    initServerlist();
+    refreshServers();
+});
+</script>
