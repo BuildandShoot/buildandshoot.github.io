@@ -636,30 +636,12 @@ li.select2-selection__choice  {
 /* Responsive Ads */
 
 .ad-blocked {
-    text-align: center;
-    vertical-align:center;
-}
-
-.ad-blocked img {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.ad-blocked .message {
-    font-size: 10pt; 
-    line-height: 1.5em;
-}
-
-.ad-blocked .message p {
-    margin: 0px; 
-}
-
-.ad-blocked {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
     border: 1px solid #286090;
     padding: 10px;
+    text-align: center;
 }
 
 .ad-pull-top {

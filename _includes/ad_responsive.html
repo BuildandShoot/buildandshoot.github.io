@@ -10,16 +10,17 @@
 </div>
 
 {% if include.adblock %}
-<div class="ad-blocked{% if include.class %} {{ include.class }}{% endif %}" style="display:none;">
-    <div class="row">
-        <div class="col-lg-1">
-            <img src="/assets/images/dead_icon.png">
+<div class="ad-blocked{% if include.class %} {{ include.class }}{% endif %}" {% if include.adblock_class %} data-adblock-class="ad-blocked {{ include.adblock_class }}"{% endif %} style="display:none;height: inherit;">
+    <div class="media">
+        <div class="media-left media-middle">
+            <img class="media-object" src="/assets/images/dead_icon.png">
         </div>
-        <div class="col-lg-11">
-            <div class="message">
-                <p>Please consider adding Build and Shoot to your adblock whitelist!</p>
-                <p>Ads help to support both the development and hardware costs for the site and game.</p>
-            </div>
+        <div class="media-body media-middle">
+            <h4 class="media-heading">Ads Support Build and Shoot</h4>
+            Build and Shoot relies on ads to help pay for development and hardware costs. Please consider adding us to your adblock's whitelist to help support us. Thank you!
+        </div>
+        <div class="media-right media-middle">
+            <img class="media-object" src="/assets/images/dead_icon.png">
         </div>
     </div>
 </div>
