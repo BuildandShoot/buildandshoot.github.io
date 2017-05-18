@@ -150,7 +150,7 @@ function getLatestLauncherRelease() {
 
     $("#loading-placeholder").show();
 
-    $.get('https://launcher.buildandshoot.com/update?json=true', function (response) {
+    $.get(httpsify('http://launcher.buildandshoot.com/update?json=true'), function (response) {
 
         for(var i = 0; i < response.length; i++) {
 
@@ -183,7 +183,7 @@ function getLatestVoxlapRelease() {
 
     $("#loading-placeholder").show();
 
-    $.get('https://services.buildandshoot.com/game_mirrors', function (response) {
+    $.get(httpsify('http://services.buildandshoot.com/game_mirrors'), function (response) {
 
         for(var i = 0; i < response.length; i++) {
 
