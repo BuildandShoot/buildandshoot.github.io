@@ -7,7 +7,7 @@ function httpsify(str) {
 function getip(callback) {
     $.ajax({
         type: "GET",
-        url: httpsify('https://services.buildandshoot.com/getip',
+        url: httpsify('https://services.buildandshoot.com/getip'),
         async: true,
         success: function(data, textStatus, xhr) {
             return callback(data); 
