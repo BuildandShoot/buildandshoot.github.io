@@ -373,11 +373,11 @@ ul li {
 }
 
 .news-next {
-    float: right;
+    float: left;
 }
 
 .news-previous {
-    float: left;
+    float: right;
 }
 
 h4.news-title {

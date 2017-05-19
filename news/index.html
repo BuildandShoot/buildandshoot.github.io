@@ -27,16 +27,15 @@ js:
             <a name="post" href="#"></a>
 
             <div class="news-navigation">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="news-previous"></h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="news-next"></h4>         
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="news-previous"></h4>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h4 class="news-next"></h4>
-                </div></div>
             </div>
-
-            <br />
 
             <div id="post-container"></div>
         </div>
@@ -142,12 +141,12 @@ function displayPost(index) {
     $("#post-container").html(post.dom);
 
     if (index < posts.length - 1)
-        $(".news-previous").html('<a href="#top" onClick="javascript:previousPost();">&laquo; ' + posts[index + 1].data.title + '</a>');
+        $(".news-previous").html('<a href="#top" onClick="javascript:previousPost();">' + posts[index + 1].data.title + ' &raquo;</a>');
     else
         $(".news-previous").html("");
 
     if (index > 0)
-        $(".news-next").html('<a href="#top" onClick="javascript:nextPost();"">&raquo; ' + posts[index - 1].data.title + '</a>');
+        $(".news-next").html('<a href="#top" onClick="javascript:nextPost();"">&laquo; ' + posts[index - 1].data.title + '</a>');
     else
         $(".news-next").html("");  
 }
