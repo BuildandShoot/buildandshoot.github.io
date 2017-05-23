@@ -77,7 +77,7 @@ $(document).ready(function () {
 
 function updateNews() {
 
-    $.get(httpsify("http://buildandshoot.com/forums/app.php/feed/news"), function(data) {
+    $.get(httpsify("http://www.buildandshoot.com/forums/app.php/feed/news"), function(data) {
         var $XML = $(data);
         
         var template = $('#news-template').html();
@@ -161,9 +161,9 @@ function previousPost() {
 
 // converts url to post-migration url (buildandshoot.com/url -> buildandshoot.com/forums/url)
 function fix_migration_url(url) {
-    if (url.includes("buildandshoot.com/forums"))
+    if (url.includes("www.buildandshoot.com/forums"))
         return url;
-    return url.replace("buildandshoot.com", "buildandshoot.com/forums");
+    return url.replace("www.buildandshoot.com", "www.buildandshoot.com/forums");
 }
 
 function normalize_post(post, id, url) {
@@ -214,7 +214,7 @@ function normalize_post(post, id, url) {
     });
 
     // center externally hosted images and make them resonsive
-    $("img:not([src*='buildandshoot.com/forums/'])", contents).each(function(index) {
+    $("img:not([src*='www.buildandshoot.com/forums/'])", contents).each(function(index) {
         $(this).addClass("center-block");
         $(this).addClass("img-responsive");
     });
