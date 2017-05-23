@@ -7,7 +7,7 @@ function httpsify(str) {
 function getip(callback) {
     $.ajax({
         type: "GET",
-        url: httpsify('https://services.buildandshoot.com/getip'),
+        url: httpsify('http://services.buildandshoot.com/getip'),
         async: true,
         success: function(data, textStatus, xhr) {
             return callback(data); 
@@ -41,6 +41,34 @@ function modifyAdContainers() {
     $("div[data-adblock-class]").each(function(index) {
         $(this).attr("class", $(this).attr("data-adblock-class"));
     });
+}
+
+function aos2ip(aos) {
+    var raw = aos.replace("aos://", "");
+    var split = raw.split(':');
+    var identifier = split[0];
+    var octets = [identifier & 0xFF, (identifier >> 8) & 0xFF, (identifier >> 16) & 0xFF, (identifier >> 24) & 0xFF];
+    return octets.join('.');
+}
+
+function ip2aos(ip, version) {
+    var octets = ip.split('.');
+
+    if (octets.length != 4)
+        return false;
+
+    for(var i = 0; i < octets.length; i++) {
+        var octet = octets[i];
+        if (octet < 0 || octet > 255)
+            return false;
+    }
+
+    var identifier = parseInt(octets[3]) * 0x1000000 + parseInt(octets[2]) * 0x10000 + parseInt(octets[1]) * 0x100 + parseInt(octets[0]);
+    var url = "aos://" + identifier;
+
+    if (version != null)
+        url += ":" + version;
+    return url;
 }
 
 var isoCountries = {
