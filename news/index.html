@@ -26,18 +26,21 @@ js:
 
             <a name="post" href="#"></a>
 
+            <div id="post-container" class="post-container"></div>
+
+            <div class="heading-hr" id="heading-hr"></div>
+
             <div class="news-navigation">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 class="news-next"></h4>         
+                        <h4 id="news-next"></h4>         
                     </div>
                     <div class="col-md-6">
-                        <h4 class="news-previous"></h4>
+                        <h4 id="news-previous"></h4>
                     </div>
                 </div>
             </div>
 
-            <div id="post-container"></div>
         </div>
 
         <div class="col-md-2 hidden-sm" data-adblock-class="hidden-xs">
@@ -136,19 +139,23 @@ function updateNews() {
     });
 }
 
+function formatTitle(title) {
+    return title.replace(":", ":<br>");
+}
+
 function displayPost(index) {
     var post = posts[index];
     $("#post-container").html(post.dom);
 
     if (index < posts.length - 1)
-        $(".news-previous").html('<a href="#top" onClick="javascript:previousPost();">' + posts[index + 1].data.title + ' &raquo;</a>');
+        $("#news-previous").html('<a href="#" onClick="javascript:previousPost();">' + formatTitle(posts[index + 1].data.title) + ' &raquo;</a>');
     else
-        $(".news-previous").html("");
+        $("#news-previous").html("");
 
     if (index > 0)
-        $(".news-next").html('<a href="#top" onClick="javascript:nextPost();"">&laquo; ' + posts[index - 1].data.title + '</a>');
+        $("#news-next").html('<a href="#" onClick="javascript:nextPost();"">&laquo; ' + formatTitle(posts[index - 1].data.title) + '</a>');
     else
-        $(".news-next").html("");  
+        $("#news-next").html("");  
 }
 
 function nextPost() {

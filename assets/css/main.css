@@ -372,11 +372,11 @@ ul li {
     margin-bottom: 15px;
 }
 
-.news-next {
+#news-next {
     float: left;
 }
 
-.news-previous {
+#news-previous {
     float: right;
 }
 
@@ -384,6 +384,10 @@ h4.news-title {
     text-align: center;
     letter-spacing: 1.2px;
     font-size: 23px;
+}
+
+.post-container {
+    padding-bottom: 15px;
 }
 
 ul.post-meta {
