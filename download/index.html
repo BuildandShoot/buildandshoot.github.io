@@ -4,16 +4,8 @@ title: Download
 mustacheSetDelimiter: "{{={u{ }u}=}}"
 js:
     - "/vendor/mustache/mustache.min.js"
+    - "/vendor/moment/moment.min.js"
 ---
-
-<script id="download-template" type="text/template">
-<tr>
-    <td class="col-md-4"><strong> {u{version}u}</strong></td>
-    <td class="col-md-4"><i class="fa fa-{u{platform_icon}u}"> {u{platform}u}</td>
-    <td class="col-md-2"><a href="#" class="btn btn-primary block-btn" data-toggle="modal" data-target="{u{modal_id}u}"><i class="fa fa-desktop"></i> System Requirements</a></td>
-    <td class="col-md-2"><a href="{u{url}u}" class="btn btn-success block-btn"><i class="fa fa-download"></i> Download</a></td>
-</tr>
-</script>
 
 <div class="container">
 
@@ -23,100 +15,29 @@ js:
 
         <div class="col-md-10 col-sm-12" data-adblock-class="col-xs-12">
 
-            <h3 class="text-center">Build and Shoot Launcher</h3>
-            <div class="heading-hr"></div>
-
-            <p class="text-center">Our launcher supports all versions of the original Ace of Spades Classic "Voxlap" client (0.1 through 0.76) and automatically runs the host server's required version.</p>
-
-            <div id="launcher-placeholder" class="text-center">
-                <img src="/assets/images/spin.gif" />
+            <div class="no-horizontal-margin">
+                <h3 class="text-center">Build and Shoot Launcher</h3>
+                <div class="heading-hr"></div>
+                <p>Our launcher supports all versions of the original Ace of Spades Classic "Voxlap" client (0.1 through 0.76) and automatically runs the host server's required version.</p>
+                <div id="launcher-container" class="download-container"></div>
             </div>
-
-            <div class="table-responsive" style="display:none" id="launcher-table">
-                <table class="table download-table">
-                    <thead>
-                        <tr>
-                            <th>Version</th>
-                            <th>Platform(s)</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="launcher-container">
-                    </tbody>
-                </table>
+            <div class="row no-horizontal-margin">
+                <h3 class="text-center">OpenSpades</h3>
+                <div class="heading-hr"></div>
+                <p>OpenSpades is an open source OpenGL-based alternative client by yvt that can be used to play on all AoS 0.75 and AoS 0.76 servers. Runs on Windows, Mac, and Linux. Improved graphics, higher system requirements.</p>
+                <div id="openspades-container" class="download-container"></div>
             </div>
-
-            <h3 class="text-center">OpenSpades</h3>
-            <div class="heading-hr"></div>
-
-            <p class="text-center">OpenSpades is an open source OpenGL-based alternative client by yvt that can be used to play on all AoS 0.75 and AoS 0.76 servers. Runs on Windows, Mac, and Linux. Improved graphics, higher system requirements.</p>
-
-            <div id="openspades-placeholder" class="text-center">
-                <img src="/assets/images/spin.gif" />  
+            <div class="row no-horizontal-margin">
+                <h3 class="text-center">Voxlap Standalone Installers</h3>
+                <div class="heading-hr"></div>
+                <p>Voxlap is the original engine used for Ace of Spades up through v0.76. If you played the game during the early beta stages, this is what you're looking for.</p>
+                <div id="voxlap-container" class="download-container"></div>
             </div>
-
-            <div class="table-responsive" style="display:none" id="openspades-table">
-                <table class="table download-table">
-                    <thead>
-                        <tr>
-                            <th>Version</th>
-                            <th>Platform(s)</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="openspades-container">
-                    </tbody>
-                </table>
-            </div>
-
-            <h3 class="text-center">Voxlap Standalone Installers</h3>
-            <div class="heading-hr"></div>
-
-            <p class="text-center">Voxlap is the original engine used for Ace of Spades up through v0.76. If you played the game during the early beta stages, this is what you're looking for.</p>
-
-            <div id="voxlap-placeholder" class="text-center">
-                <img src="/assets/images/spin.gif" />
-            </div>
-
-            <div class="table-responsive" style="display:none" id="voxlap-table">
-                <table class="table download-table">
-                    <thead>
-                        <tr>
-                            <th>Version</th>
-                            <th>Platform(s)</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="voxlap-container">
-                    </tbody>
-                </table>
-            </div>
-
-            <h3 class="text-center">PySnip Server</h3>
-            <div class="heading-hr"></div>
-
-            <p class="text-center">PySnip is a robust, open-source and cross-platform server implementation for Ace of Spades. It is fully customizable with extensions and scripts.</p>
-
-            <div id="pysnip-placeholder" class="text-center">
-                <img src="/assets/images/spin.gif" />
-            </div>
-
-            <div class="table-responsive" style="display:none" id="pysnip-table">
-                <table class="table download-table">
-                    <thead>
-                        <tr>
-                            <th>Version</th>
-                            <th>Platform(s)</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="pysnip-container">
-                    </tbody>
-                </table>
+            <div class="row no-horizontal-margin">
+                <h3 class="text-center">PySnip Server</h3>
+                <div class="heading-hr"></div>
+                <p>PySnip is a robust, open-source and cross-platform server implementation for Ace of Spades. It is fully customizable with extensions and scripts.</p>
+                <div id="pysnip-container" class="download-container"></div>
             </div>
         </div>
 
@@ -130,303 +51,148 @@ js:
 
 </div>
 
+<script id="download-template" type="text/template">
+<ul class="nav nav-tabs nav-tabs-custom">
+    <li class="active"><a data-toggle="tab" href="#{u{release_name}u}-files-tab"><i class="fa fa-download"></i> Files</a></li>
+    <li><a data-toggle="tab" href="#{u{release_name}u}-requirements-tab"><i class="fa fa-desktop"></i> System Requirements</a></li>
+</ul>
+<div class="tab-content">
+    <div id="{u{release_name}u}-files-tab" class="tab-pane fade in active">
+
+        <div id="{u{release_name}u}-placeholder" class="loading-placeholder">
+            <img src="/assets/images/spin.gif" />
+            <h3>Loading...</h3>
+        </div>
+
+        <div class="table-responsive" style="display:none" id="{u{release_name}u}-table">
+            <table class="table download-table">
+                <thead>
+                    <tr>
+                        <th>Version</th>
+                        <th>Platform(s)</th>
+                        <th>Updated</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="{u{release_name}u}-files">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="{u{release_name}u}-requirements-tab" class="tab-pane fade">
+        <div class="col-sm-6">
+            <h3>Minimum</h3>
+            <ul>
+              {u{#minimum_specs}u}
+                <li>{u{.}u}</li>
+              {u{/minimum_specs}u}
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <h3>Recommended</h3>
+            <ul>
+              {u{#recommended_specs}u}
+                <li>{u{.}u}</li>
+              {u{/recommended_specs}u}
+            </ul>
+        </div>
+    </div>
+</div>
+</script>
+
+<script id="files-template" type="text/template">
+<tr>
+    <td class="col-md-3"><strong> {u{version}u}</strong></td>
+    <td class="col-md-3"><i class="fa fa-{u{platform.fontawesome}u}" aria-hidden="true"> {u{platform.name}u}</td>
+    <td class="col-md-3"><i class="fa fa-calendar" aria-hidden="true"></i> <span class="file-updated">{u{updated}u}</span></td>
+    <td class="col-md-3"><a href="{u{url}u}" class="btn btn-success block-btn"><i class="fa fa-download"></i> Download</a></td>
+</tr>
+</script>
+
 <script type="text/javascript">
-function Download(name, version, platform, platform_icon, url, modal_id) {
-    this.name = name;
-    this.version = version;
-    this.platform = platform;
-    this.platform_icon = platform_icon;
-    this.url = url;
-    this.modal_id = modal_id;
+function populateDownloads(release_name, minimum_specs, recommended_specs) {
+    var templateData = {
+                release_name : release_name,
+                minimum_specs: minimum_specs,
+                recommended_specs: recommended_specs
+            }
+
+    var downloadTemplate = $('#download-template').html();
+    $("#" + release_name + "-container").append(Mustache.render("{{page.mustacheSetDelimiter}} " + downloadTemplate, templateData));  
 }
 
-function getLatestLauncherRelease() {
+function gotReleases(releases, tag) {
+    if (releases.length == 0)
+        return;
 
-    var table = $("#launcher-container");
+    var filesTemplate = $('#files-template').html();
 
-    var rows = [];
+    if (releases.length > 0) {
+        $("#" + tag + "-placeholder").hide();
+        $("#" + tag + "-table").show();
+    }
 
-    var template = $('#download-template').html();
+    var filesContainer = $("#" + tag + "-files");
 
-    $("#loading-placeholder").show();
+    for(var i = 0; i < releases.length; i++) {
+        filesContainer.append(Mustache.render("{{page.mustacheSetDelimiter}} " + filesTemplate, releases[i]));
+    }
 
-    $.get(httpsify('http://launcher.buildandshoot.com/update?json=true'), function (response) {
+    //todo switch this to proper mustache date formatting
+    $(".file-updated", filesContainer).each(function () {
+        var updated = $(this).text();
+        var m = moment(updated);
 
-        for(var i = 0; i < response.length; i++) {
-
-            var update = response[i];
-
-            if (update.url.endsWith(".exe")) {
-                var download = new Download("Voxlap", "v" + update.version, "Windows", "windows", update.url, "#launcher-requirements-modal");
-                var row = Mustache.render("{{page.mustacheSetDelimiter}} " + template, download);
-                rows.push(row);
-            }
-        }
-
-        $("#launcher-placeholder").hide();
-        $("#launcher-table").show();
-        table.empty();
-
-        for (var i = 0; i < rows.length; i++) {
-            table.append(rows[i]);
-        }
-    });
-}
-
-function getLatestVoxlapRelease() {
-
-    var table = $("#voxlap-container");
-
-    var rows = [];
-
-    var template = $('#download-template').html();
-
-    $("#loading-placeholder").show();
-
-    $.get(httpsify('http://services.buildandshoot.com/game_mirrors'), function (response) {
-
-        for(var i = 0; i < response.length; i++) {
-
-            var mirror = response[i];
-
-            if (mirror.format == "msi") {
-                var download = new Download("Voxlap", "v" + mirror.version, "Windows", "windows", mirror.url, "#voxlap-requirements-modal");
-                var row = Mustache.render("{{page.mustacheSetDelimiter}} " + template, download);
-                rows.push(row);
-            }
-        }
-
-        $("#voxlap-placeholder").hide();
-        $("#voxlap-table").show();
-        table.empty();
-
-        for (var i = 0; i < rows.length; i++) {
-            table.append(rows[i]);
-        }
-    });
-}
-
-function getLatestOpenspadesRelease() {
-
-    var table = $("#openspades-container");
-
-    var rows = [];
-
-    var template = $('#download-template').html();
-
-    $("#loading-placeholder").show();
-
-    $.get('https://api.github.com/repos/yvt/openspades/releases/latest', function (response) {
-        var version = response.tag_name;
-
-        for(var i = 0; i < response.assets.length; i++) {
-            var asset = response.assets[i];
-            
-            if (asset.content_type == "application/zip") {
-
-                var platform = "";
-                var platform_icon = "";
-
-                if (asset.name.match(/osx/i)) {
-                    platform = "OSX";
-                    platform_icon = "apple";
-                }
-                else if (asset.name.match(/windows/i)) {
-                    platform = "Windows";
-                    platform_icon = "windows";
-                }
-
-                var download = new Download(asset.name, version, platform, platform_icon, asset.browser_download_url, "#openspades-requirements-modal");
-                var row = Mustache.render("{{page.mustacheSetDelimiter}} " + template, download);
-                rows.push(row);
-            }
-        }
-        
-        $("#openspades-placeholder").hide();
-        $("#openspades-table").show();
-        table.empty();
-
-        for (var i = 0; i < rows.length; i++) {
-            table.append(rows[i]);
-        }
-    });
-}
-
-function getLatestPySnipRelease() {
-
-    var table = $("#pysnip-container");
-
-    var rows = [];
-
-    var template = $('#download-template').html();
-
-    $("#loading-placeholder").show();
-
-    $.get('https://api.github.com/repos/NateShoffner/PySnip/releases', function (response) {
-
-        var linux = [];
-
-        for(var i = 0; i < 2; i++) {
-
-            var release = response[i];
-
-            var asset = release.assets[0];
-
-            var split = release.tag_name.split("-");
-            var version = split[0] + " (rev. " + split[2] + ")";
-
-            if (asset.content_type == "application/zip") {
-
-                var download = new Download(asset.name, version, "Windows", "windows", asset.browser_download_url, "#pysnip-requirements-modal");
-                var row = Mustache.render("{{page.mustacheSetDelimiter}} " + template, download);
-                rows.push(row);
-
-                linux.push(Mustache.render("{{page.mustacheSetDelimiter}} " + template, new Download(asset.name, version, "Linux", "linux", release.zipball_url, "#pysnip-requirements-modal")));
-            }
-        }
-
-        $("#pysnip-placeholder").hide();
-        $("#pysnip-table").show();
-        table.empty();
-
-        for (var i = 0; i < rows.length; i++) {
-            table.append(rows[i]);
-        }
-        for (var i = 0; i < linux.length; i++) {
-            table.append(linux[i]);
+        if (m.isValid()) {
+            $(this).text(m.format("MMMM Do, YYYY"));
+        } else {
+            $(this).text("N/A");
         }
     });
 }
 
 $(document).ready(function () {
-    getLatestLauncherRelease();
-    getLatestVoxlapRelease();
-    getLatestOpenspadesRelease();
-    getLatestPySnipRelease();
+
+    populateDownloads("launcher", 
+        ['Windows XP or later', 
+        'Microsoft .NET Framework 3.5'], 
+
+        ['Windows 7 or later', 
+        'Microsoft .NET Framework 3.5']);
+
+    getLauncherReleases(gotReleases, "launcher");
+
+    populateDownloads("openspades", 
+        ['Windows Vista or later, OS X, or Linux',
+        '1GHz dual-core processor',
+        'GPU: 512MB or more VRAM',
+        'GPU (Intel): Intel HD Graphics 3000 or better',
+        'GPU (NVIDIA): GeForce 9 Series or better',
+        'GPU (AMD): Radeon HD 7350',
+        '1GB RAM',
+        '800x600 display',
+        'Broadband network connection',
+        'Keyboard and pointing device'],
+
+        ['3GHz quad-core processor',
+        'Stereo audio output',
+        'GPU: 1GB or more VRAM',
+        'GPU (NVIDIA): GeForce GTX 680',
+        'GPU (AMD): Radeon R9 280X',
+        '2GB RAM',
+        'Mouse input']); 
+    getOpenspadesReleases(gotReleases, "openspades");
+
+    populateDownloads("pysnip", 
+        ['Python 2.7'],
+
+        ['Python 2.7']);
+    getPysnipReleases(gotReleases, "pysnip");
+
+    populateDownloads("voxlap", 
+        ['Your grandmother’s rig can run this game.'],
+
+        ['Your mother’s rig can run this game.']);
+    getVoxlapReleases(gotReleases, "voxlap");
 }); 
 </script>
-
-<div id="launcher-requirements-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Launcher Requirements</h3>
-            </div>
-            <div class="modal-body">
-
-                <h3>Recommended</h3>
-                <ul>
-                    <li>Windows XP or later</li>
-                    <li><a href="https://www.microsoft.com/en-us/download/details.aspx?id=21" target="_blank">Microsoft .NET Framework 3.5</a></li>
-                </ul>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary block-btn" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="openspades-requirements-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">OpenSpades Requirements</h3>
-            </div>
-            <div class="modal-body">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>Minimum</h3>
-                        <ul>
-                            <li>Windows Vista or later, OS X, or Linux</li>
-                            <li>1GHz dual-core processor</li>
-                            <li>GPU: 512MB or more VRAM</li>
-                            <li>GPU (Intel): Intel HD Graphics 3000 or better</li>
-                            <li>GPU (NVIDIA): GeForce 9 Series or better</li>
-                            <li>GPU (AMD): Radeon HD 7350</li>
-                            <li>1GB RAM</li>
-                            <li>800x600 display</li>
-                            <li>Broadband network connection</li>
-                            <li>Keyboard and pointing device</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h3>Recommended</h3>
-                        <ul>
-                            <li>3GHz quad-core processor</li>
-                            <li>Stereo audio output</li>
-                            <li>GPU: 1GB or more VRAM</li>
-                            <li>GPU (NVIDIA): GeForce GTX 680</li>
-                            <li>GPU (AMD): Radeon R9 280X</li>
-                            <li>2GB RAM</li>
-                            <li>Mouse input</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary block-btn" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="pysnip-requirements-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">PySnip Requirements</h3>
-            </div>
-            <div class="modal-body">
-
-                <h3>Recommended</h3>
-                <ul>
-                    <li>Python 2.7</li>
-                </ul>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary block-btn" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="voxlap-requirements-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Voxlap Requirements</h3>
-            </div>
-            <div class="modal-body">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>Minimum</h3>
-                        <ul>
-                            <li>Your grandmother’s rig can run this game.</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h3>Recommended</h3>
-                        <ul>
-                            <li>Your mother’s rig can run this game.</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary block-btn" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-

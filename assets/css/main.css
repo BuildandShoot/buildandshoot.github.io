@@ -347,10 +347,10 @@ hr.heading:after {
 }
 
 ul {
-    list-style-type: square;        
+    list-style-type: square;;
 }
 
-ul li {
+ul.game-bullets li {
     padding-bottom: 7px;            
 }
 
@@ -468,6 +468,10 @@ li.post-meta-item {
     margin-bottom: 10px;
 }
 
+.download-container:not(:last-child) {
+    margin-bottom: 20px;
+}
+
 .download-table {
    background-color:rgba(0, 0, 0, 0);
 }
@@ -481,8 +485,12 @@ li.post-meta-item {
 }
 
 .download-table > thead > tr > th {
-    border-bottom: 0px solid #000;
-    font-size: 16px;
+    border: none;
+}
+
+
+.download-table > tbody > tr > th {
+    border-top: 1px solid #e7e7e7;
 }
 
 ul.header-nav {
@@ -528,6 +536,54 @@ input[type="text"] {
 .select2-results > ul > li {
     color: #FFFFFF;
     background-color: black;
+}
+
+.no-horizontal-margin {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.nav-tabs-custom > li {
+    cursor: hand;
+}
+
+.nav-tabs-custom > li > a {
+    border-radius: 0;
+}
+
+.nav-tabs-custom > li > a:hover{
+    background-color: rgba(102,102,102,0.9);
+    border-radius: 0;
+    color:#fff;
+}
+
+.nav-tabs {
+    border-bottom: none; 
+}
+.nav-tabs-custom { 
+    border-bottom: 1px solid rgba(102,102,102,0.9);
+}
+
+.nav-tabs-custom > li.active > a, 
+.nav-tabs-custom > li.active > a:focus, 
+.nav-tabs-custom > li.active > a:hover {
+    background-color: rgba(25,25,25,0.9);
+    color: #FFFFFF;
+    border-top: 1px solid rgba(102,102,102,0.9);
+    border-right: 1px solid rgba(102,102,102,0.9);
+    border-bottom: 0px solid #000;
+    border-left: 1px solid rgba(102,102,102,0.9);
+
+}
+
+.nav-tabs-custom > li {
+    border-radius: 0;
+    cursor: hand;
+}
+
+.loading-placeholder {
+    padding: 15px;
+    text-align: center;
 }
 
 /*

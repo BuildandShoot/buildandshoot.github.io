@@ -43,16 +43,8 @@ function modifyAdContainers() {
     });
 }
 
-function aos2ip(aos) {
-    var raw = aos.replace("aos://", "");
-    var split = raw.split(':');
-    var identifier = split[0];
-    var octets = [identifier & 0xFF, (identifier >> 8) & 0xFF, (identifier >> 16) & 0xFF, (identifier >> 24) & 0xFF];
-    return octets.join('.');
-}
-
-function ip2aos(ip, version) {
-    var octets = ip.split('.');
+function isIP(str) {
+    var octets = str.split('.');
 
     if (octets.length != 4)
         return false;
@@ -63,13 +55,36 @@ function ip2aos(ip, version) {
             return false;
     }
 
+   return true;
+}
+
+function isValidPort(port) {
+    return Number.IsNumber(port) && port >= 0 && port <= 65535;
+}
+
+function ip2aos(address, version) {
+
+    var split = address.split(':');
+    var ip = split[0];
+
+    if (!isIP(ip))
+        return false;
+
+    if (split.length > 1 && !isValidPort(split[1]))
+        return false;
+
+    var port = split.length > 1 ? split[1] : 32887;
+
+    var octets = ip.split('.');
     var identifier = parseInt(octets[3]) * 0x1000000 + parseInt(octets[2]) * 0x10000 + parseInt(octets[1]) * 0x100 + parseInt(octets[0]);
-    var url = "aos://" + identifier;
+    var url = "aos://" + identifier + ":" + port;
 
     if (version != null)
         url += ":" + version;
     return url;
 }
+
+var gameVersions = ["0.1", "0.2", "0.21", "0.22", "0.25", "0.26", "0.3", "0.31", "0.32", "0.33", "0.35", "0.36", "0.4", "0.41", "0.42", "0.45", "0.46", "0.47", "0.48", "0.49", "0.5", "0.51", "0.52", "0.53", "0.54", "0.58", "0.6", "0.61", "0.62", "0.7", "0.75", "0.76"];
 
 var isoCountries = {
     'AF' : 'Afghanistan',
@@ -326,4 +341,112 @@ function getCountryName (countryCode) {
     } else {
         return countryCode;
     }
+}
+
+var PLATFORM = {
+    WINDOWS : {value: 0, name: "Windows", fontawesome: "windows"}, 
+    OSX : {value: 1, name: "OSX", fontawesome: "apple"},  
+    LINUX : {value: 2, name: "Linux", fontawesome: "linux"}, 
+};
+
+function Release(name, version, updated, platform, url) {
+    this.name = name;
+    this.version = version;
+    this.updated = updated;
+    this.platform = platform;
+    this.url = url;
+}
+
+function getLauncherReleases(callback, tag) {
+    var releases = [];
+
+    $.get(httpsify('http://launcher.buildandshoot.com/update?json=true'), function (response) {
+        for(var i = 0; i < response.length; i++) {    
+            var update = response[i];
+            if (update.url.endsWith(".exe")) {
+                var release = new Release("Build and Shoot Launcher", "v" + update.version, update.published, PLATFORM.WINDOWS, update.url);
+                releases.push(release); 
+            }
+        }
+
+        return callback(releases, tag); 
+    });
+}
+
+function getOpenspadesReleases(callback, tag) {
+    var releases = [];
+
+    $.get('https://api.github.com/repos/yvt/openspades/releases/latest', function (response) {
+        var version = response.tag_name;
+
+        for(var i = 0; i < response.assets.length; i++) {
+            var asset = response.assets[i];
+            
+            if (asset.content_type == "application/zip") {
+
+                var platform;
+
+                if (asset.name.match(/osx/i)) {
+                    platform = PLATFORM.OSX;
+                }
+                else if (asset.name.match(/windows/i)) {
+                    platform = PLATFORM.WINDOWS;
+                }
+
+                var release = new Release(asset.name, version, asset.created_at, platform, asset.browser_download_url);
+                releases.push(release);
+            }
+        }
+
+        return callback(releases, tag);
+    });
+}
+
+function getPysnipReleases(callback, tag) {
+    var releases = [];
+
+    $.get('https://api.github.com/repos/NateShoffner/PySnip/releases', function (response) {
+
+        var linux = [];
+
+        for(var i = 0; i < 2; i++) {
+
+            var release = response[i];
+
+            var asset = release.assets[0];
+
+            var split = release.tag_name.split("-");
+            var version = split[0] + " (rev. " + split[2] + ")";
+
+            if (asset.content_type == "application/zip") {
+
+                var release = new Release(asset.name, version, asset.created_at, PLATFORM.WINDOWS, asset.browser_download_url);
+                releases.push(release);
+
+                var linuxZipball = new Release(asset.name, version, asset.created_at, PLATFORM.LINUX, release.zipball_url);
+                releases.push(linuxZipball);
+            }
+        }
+
+        return callback(releases, tag);
+    });
+}
+
+function getVoxlapReleases(callback, tag) {
+    var releases = [];
+
+    $.get(httpsify('http://services.buildandshoot.com/game_mirrors'), function (response) {
+
+        for(var i = 0; i < response.length; i++) {
+
+            var mirror = response[i];
+
+            if (mirror.format == "msi") {
+                var release = new Release("Voxlap", "v" + mirror.version, "N/A", PLATFORM.WINDOWS, mirror.url);
+                releases.push(release);
+            }
+        }
+
+        return callback(releases, tag);
+    });
 }
