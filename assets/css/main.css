@@ -464,8 +464,8 @@ li.post-meta-item {
 .block-btn {
     border-radius:0;
     width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .download-container:not(:last-child) {
@@ -516,10 +516,15 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
     background-color: black;
     color:#FFFFFF;
     border-radius: 0px;
+}
+
+select {
+    background-color: black;
 }
 
 /* Serverlist */
@@ -579,6 +584,10 @@ input[type="text"] {
 .nav-tabs-custom > li {
     border-radius: 0;
     cursor: hand;
+}
+
+.tab-content {
+    padding-top: 15px;
 }
 
 .loading-placeholder {
@@ -663,6 +672,8 @@ li.select2-selection__choice  {
 
 .server-filter {
     width: 100%;
+    background: #000000;
+    color: #FFFFFF;
 }
 
 /* Modal */

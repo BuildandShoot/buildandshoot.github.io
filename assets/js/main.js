@@ -59,10 +59,31 @@ function isIP(str) {
 }
 
 function isValidPort(port) {
-    return Number.IsNumber(port) && port >= 0 && port <= 65535;
+    return isNumber(port) && port > 0 && port <= 65535;
 }
 
-function ip2aos(address, version) {
+function launchGame(identifier) {
+    location.href = identifier;
+}
+
+function isValidIdentifier(str) {
+    if (!str.toLowerCase().startsWith("aos://"))
+        return false;
+
+    var str = str.substring(6);
+    var split = str.split(':');
+
+    var address = split[0];
+    if (address < 0 || address > 0XFFFFFFFF)
+        return false;
+
+    if (split.length > 1 && !isValidPort(split[1]))
+        return false;
+
+    return true;
+}
+    
+function ip2aos(address, port, version) {
 
     var split = address.split(':');
     var ip = split[0];
@@ -82,6 +103,10 @@ function ip2aos(address, version) {
     if (version != null)
         url += ":" + version;
     return url;
+}
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 var gameVersions = ["0.1", "0.2", "0.21", "0.22", "0.25", "0.26", "0.3", "0.31", "0.32", "0.33", "0.35", "0.36", "0.4", "0.41", "0.42", "0.45", "0.46", "0.47", "0.48", "0.49", "0.5", "0.51", "0.52", "0.53", "0.54", "0.58", "0.6", "0.61", "0.62", "0.7", "0.75", "0.76"];
@@ -355,6 +380,16 @@ function Release(name, version, updated, platform, url) {
     this.updated = updated;
     this.platform = platform;
     this.url = url;
+}
+
+function Identifier(id, port) {
+    this.id = id;
+    this.port = port;
+    this.version = version;
+
+    this.toString = function () {
+        return "aos://" + this.id + ":" + this.port + ":" + this.version;
+    };
 }
 
 function getLauncherReleases(callback, tag) {

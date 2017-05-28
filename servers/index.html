@@ -135,7 +135,57 @@ js:
                 <h4 class="modal-title">Direct Connect</h4>
             </div>
             <div class="modal-body">
-                <p>Use this to connect to a locally-hosted server.</p>
+
+                <ul class="nav nav-tabs nav-tabs-custom">
+                    <li class="active"><a href="#tab-url" data-toggle="tab">Connect via URL</a></li>
+                    <li><a href="#tab-ip" data-toggle="tab">Connect via IP</a></li>
+                </ul>
+                
+                <div class="tab-content">
+                    
+                    <div class="tab-pane fade in active" id="tab-url">
+
+                        <div class="form-group">
+                            <label for="direct-url">Server URL</label>
+                            <input class="form-control" id="direct-url" placeholder="Enter Server URL (eg: aos://16777343:32887:0.75)" type="text">
+                        </div>
+     
+                        <button type="button" id="direct-connect-url" class="btn btn-success block-btn"><i class="fa fa-play"></i> Connect</button>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-ip">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control" id="direct-ip" placeholder="Enter Server IP" type="text">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" id="get-ip" class="btn btn-primary block-btn"><i class="fa fa-play"></i> Use My IP</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="direct-port">Server Port:</label>
+                                    <input type="number" min="1" max="65535" class="form-control" id="direct-port" value="32887" placeholder="Port">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="direct-versions">Game Version:</label>
+                                    <select id="direct-versions" class="form-control server-filter" data-width="100%"></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <br />
+                                <button type="button" id="direct-connect-ip" class="btn btn-success block-btn"><i class="fa fa-play"></i> Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary block-btn" data-dismiss="modal">Close</button>
@@ -464,6 +514,35 @@ function resetFilters() {
     ignoreFilterEvents = false;
 }
 
+$("#get-ip").click(function(){
+    if (userIP != null) {
+        $("#direct-ip").val(userIP);
+    }
+});
+
+$("#direct-connect-url").click(function(){ 
+    var url = $("#direct-url").val();
+
+    if (isValidIdentifier(url)) {
+        launchGame(url);
+    } else
+        alert("Invalid server identifier");
+});
+
+$("#direct-connect-ip").click(function(){
+
+   var ip = $("#direct-ip").val();
+   var port = $("#direct-port").val();
+
+   if (isIP(ip) && isValidPort(port)) {
+        var version = $("#direct-versions").val();;
+        var url = ip2aos(ip, port, version);
+        launchGame(url);
+   } else {
+        alert("Invalid server ideinformation");
+   }
+});
+
 $(".dropdown-menu li a").click(function(){
   $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
   $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
@@ -516,6 +595,12 @@ $(document).ready(function() {
         resetFilters();
         filterServers();
     });
+
+    $.each(gameVersions, function(val, text) {
+        $('#direct-versions').append( $('<option></option>').val(text).html(text) )
+    });
+    $('#direct-versions option[value="0.75"]').prop('selected', true);
+
 
     getip(gotIP);
     initServerlist();
