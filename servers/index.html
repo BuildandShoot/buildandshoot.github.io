@@ -484,9 +484,9 @@ function sortServers(col) {
     $("#server-columns th i").css("visibility", "hidden");
 
     if (col == "slots")
-        $('#servers-container>tr').tsort( { attr:'data-players', order:sortDirection} ); 
+        $('#servers-container>tr:not(.direct)').tsort({attr:'data-players', order:sortDirection} ); 
     else
-        $('#servers-container>tr').tsort('.col-' + col, {order:sortDirection} );
+        $('#servers-container>tr:not(.direct)').tsort('.col-' + col, {order:sortDirection} );
 
     var sortClass = 'fa fa-sort-' +  sortDirection;
     $("#sort-" + col).attr("class", sortClass).css("visibility", "visible");
