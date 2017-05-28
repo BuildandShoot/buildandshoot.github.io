@@ -5,9 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Build and Shoot" />
     <meta name="keywords" content="Ace,Of,Spades,prototype,Minecraft,Team Fortress,Ben Aksoy,Voxlap,free,online,multiplayer,build,building,game,shoot,shooting,shooter,fps,blocks,guns,smg,shotgun,rifle,voxel" />
-    <meta name="description" content="Build and Shoot is a player-run community for the online voxel FPS game based on Ace of Spades Classic. Login to play the game, interact with players, and customize your experience - it's all 100% free!" />
+    <meta name="description" content="{{ site.description }}" />
+    <!-- Open Graph -->
+    <meta content="Build and Shoot" property="og:site_name">
+    <meta content="Build and Shoot{% if page.title %} &bull; {{ page.title }}{% endif %}" property="og:title">
+    <meta content="{{ site.description }}" property="og:description">
+    <meta content="{{ site.url }}/assets/images/logo.png" property="og:image">
+    <meta content="website" property="og:type">
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@BuildandShoot">
+    <meta name="twitter:site" content="@BuildandShoot">
+    <meta name="twitter:description" content="{{ site.description }}">
+    <meta name="twitter:image:src" content="{{ site.url }}/assets/images/logo.png">
     <title>Build and Shoot{% if page.title %} &bull; {{ page.title }}{% endif %}</title>
-    <link rel="shortcut icon" href="/assets/images/favicon.png">
+    <link rel="shortcut icon" href="{{ site.baseurl }}/assets/images/logo.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ site.baseurl }}/assets/images/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ site.baseurl }}/assets/images/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ site.baseurl }}/assets/images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.baseurl }}/assets/images/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{{ site.baseurl }}/assets/images/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ site.baseurl }}/assets/images/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ site.baseurl }}/assets/images/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ site.baseurl }}/assets/images/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="{{ site.url }}/assets/images/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="{{ site.url }}/assets/images/mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="{{ site.url }}/assets/images/mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="{{ site.url }}/assets/images/mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="{{ site.url }}/assets/images/mstile-310x310.png" />
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
