@@ -731,7 +731,53 @@ li.select2-selection__choice  {
     margin-right: 10px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 519px) {
+
+    .hidden-xs { 
+        display: none!important;
+    }
+
+    .mrec-xs { 
+        width:300px;
+        height:250px;
+    }
+
+    .leaderboard-xs { 
+        width:320px;
+        height:100px;
+    }
+
+    .mobile-xs { 
+        width:320px;
+        height:50px;
+    }
+
+    .skyscraper-xs { 
+        width:120px;
+        height:600px;
+    }
+
+    .banner-xs { 
+        width:320px;
+        height:100px;
+    }
+
+    .centered-xs { 
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .right-xs {
+        float: right;
+    }
+
+    .left-xs {
+        float: left;
+    }
+
+}
+
+@media (min-width: 520px) and (max-width: 767px) {
 
     .hidden-xs { 
         display: none!important;
