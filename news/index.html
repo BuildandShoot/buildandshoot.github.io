@@ -80,7 +80,7 @@ $(document).ready(function () {
 
 function updateNews() {
 
-    $.get(httpsify("http://www.buildandshoot.com/forums/app.php/feed/news"), function(data) {
+    $.get(httpsify("{{ site.forum_feed }}"), function(data) {
         var $XML = $(data);
         
         var template = $('#news-template').html();
