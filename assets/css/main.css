@@ -220,11 +220,11 @@ blockquote p {
         margin-left: 2px;
     }
 
-    .nav-social {
+    .nav-forums {
         margin-left: 4px;
     }
 
-    .social-menu {
+    .forums-menu {
         width: 173px;
         margin-left: 1px;
     }
@@ -265,11 +265,11 @@ blockquote p {
         margin-left: 25px;
     }
 
-    .nav-social {
+    .nav-forums {
         margin-left: 25px;
     }
 
-    .social-menu {
+    .forums-menu {
         width: 187px;
         margin-left: 15px;
     }
@@ -310,11 +310,11 @@ blockquote p {
         margin-left: 208px;
     }
 
-    .nav-social {
+    .nav-forums {
         margin-left: 17px;
     }
 
-    .social-menu {
+    .forums-menu {
         width: 171px;
         margin-left: 10px;
     }
@@ -449,13 +449,13 @@ li.post-meta-item {
     height: 23px;
 }
 
-.nav-social {
+.nav-forums {
     background: url('/assets/images/navigation.png') no-repeat -474px 0;
     width: 119px;
     height: 23px;
 }
 
-.nav-social:hover {
+.nav-forums:hover {
     background: url('/assets/images/navigation.png') no-repeat -474px -27px;
     width: 119px;
     height: 23px;
