@@ -401,6 +401,10 @@ li.post-meta-item {
     padding-right: 20px;
 }
 
+li.post-meta-item img {
+    image-rendering: pixelated;
+}
+
 .nav-home {
     background: url('/assets/images/navigation.png') no-repeat 0 0;
     width: 84px;
@@ -713,6 +717,7 @@ li.select2-selection__choice  {
     border: 1px solid #286090;
     padding: 10px;
     text-align: center;
+    image-rendering: pixelated;
 }
 
 .ad-pull-top {
