@@ -85,7 +85,7 @@ blockquote p {
     margin-bottom: 0px;
 }
 
-.ad-blocked .media-object img {
+.ad-blocked {
     image-rendering: pixelated;
 }
 
