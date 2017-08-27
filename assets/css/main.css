@@ -85,6 +85,10 @@ blockquote p {
     margin-bottom: 0px;
 }
 
+.ad-blocked .media-object img {
+    image-rendering: pixelated;
+}
+
 @media (min-width: 768px ) {
 
     .navbar-collapse {
