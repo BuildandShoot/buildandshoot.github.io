@@ -33,10 +33,10 @@ js:
             <div class="news-navigation">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 id="news-next"></h4>         
+                        <a href="#" id="news-next" class="btn btn-success block-btn news-nav-btn" style="display:none"></a>      
                     </div>
                     <div class="col-md-6">
-                        <h4 id="news-previous"></h4>
+                        <a href="#" id="news-prev" class="btn btn-success block-btn news-nav-btn" style="display:none"></a>  
                     </div>
                 </div>
             </div>
@@ -139,23 +139,28 @@ function updateNews() {
     });
 }
 
-function formatTitle(title) {
-    return title.replace(":", ":<br>");
+function formatTitle(title, direction) {
+    var ind = '<i class="fa fa-arrow-' + direction + '" aria-hidden="true"></i> ';
+    return direction == 'left' ? ind + title : title + ' ' + ind;
 }
 
 function displayPost(index) {
     var post = posts[index];
     $("#post-container").html(post.dom);
 
-    if (index < posts.length - 1)
-        $("#news-previous").html('<a href="#" onClick="javascript:previousPost();">' + formatTitle(posts[index + 1].data.title) + ' &raquo;</a>');
+    if (index < posts.length - 1) {
+        $("#news-prev").html(formatTitle(posts[index + 1].data.title, "right"));
+        $("#news-prev").show();
+    }
     else
-        $("#news-previous").html("");
+        $("#news-prev").hide();
 
-    if (index > 0)
-        $("#news-next").html('<a href="#" onClick="javascript:nextPost();"">&laquo; ' + formatTitle(posts[index - 1].data.title) + '</a>');
+    if (index > 0) {
+        $("#news-next").html(formatTitle(posts[index - 1].data.title, "left"));
+        $("#news-next").show();
+    }
     else
-        $("#news-next").html("");  
+        $("#news-next").hide();  
 }
 
 function nextPost() {
@@ -246,6 +251,14 @@ function normalize_post(post, id, url) {
 
 var avatars = ["blueie.png", "greenjd.png", "greyo.png", "orangeb.png", "purplez.png", "redym.png", "yellowlm.png"];
 var authorMap = {};
+
+$("#news-next").click(function() {
+    nextPost()
+});
+
+$("#news-prev").click(function() {
+    previousPost()
+});
 
 function set_author_avatar(author, postID, post) {
     if (!(author in authorMap)) {

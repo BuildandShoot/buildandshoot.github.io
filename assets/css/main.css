@@ -468,6 +468,16 @@ li.post-meta-item {
     margin-bottom: 5px;
 }
 
+.news-nav-btn {
+    display: inline-block;
+    min-height: 54px;
+    vertical-align: middle;
+    text-align:center;
+    line-height: 54px;
+    display: block;
+    padding: 0px;
+}
+
 .download-container:not(:last-child) {
     margin-bottom: 20px;
 }
