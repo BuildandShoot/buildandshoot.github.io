@@ -165,10 +165,12 @@ function displayPost(index) {
 
 function nextPost() {
     displayPost(--currentPost);
+    $('html,body').animate({scrollTop: $("a[name='post'").offset().top},'slow');
 }
 
 function previousPost() {
     displayPost(++currentPost);
+    $('html,body').animate({scrollTop: $("a[name='post'").offset().top},'slow');
 }
 
 // converts url to post-migration url (buildandshoot.com/url -> buildandshoot.com/forums/url)
