@@ -417,7 +417,7 @@ function getOpenspadesReleases(callback, tag) {
         for(var i = 0; i < response.assets.length; i++) {
             var asset = response.assets[i];
             
-            if (asset.content_type == "application/zip") {
+            if (asset.content_type == "application/zip" || asset.content_type == "application/x-zip-compressed") {
 
                 var platform;
 
