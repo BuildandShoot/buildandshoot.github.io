@@ -372,6 +372,7 @@ var PLATFORM = {
     WINDOWS : {value: 0, name: "Windows", fontawesome: "windows"}, 
     OSX : {value: 1, name: "OSX", fontawesome: "apple"},  
     LINUX : {value: 2, name: "Linux", fontawesome: "linux"}, 
+    MULTI : {value: 3, name: "Multiplatform", fontawesome: "server"},
 };
 
 function Release(name, version, updated, platform, url) {
@@ -466,6 +467,26 @@ function getPysnipReleases(callback, tag) {
         return callback(releases, tag);
     });
 }
+
+function getPiqueserverReleases(callback, tag) {
+    var releases = [];
+
+    $.get('https://api.github.com/repos/piqueserver/piqueserver/releases', function (response) {
+
+        var linux = [];
+
+        for(var i = 0; i < 2; i++) {
+
+            var release = response[i];
+
+            var release = new Release(release.name, release.tag_name, release.created_at, PLATFORM.MULTI, release.html_url);
+            releases.push(release);
+        }
+
+        return callback(releases, tag);
+    });
+}
+
 
 function getVoxlapReleases(callback, tag) {
     var releases = [];
