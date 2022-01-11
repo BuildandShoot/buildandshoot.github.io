@@ -396,7 +396,7 @@ function Identifier(id, port) {
 function getLauncherReleases(callback, tag) {
     var releases = [];
 
-    $.get(httpsify('http://launcher.buildandshoot.com/update?json=true'), function (response) {
+    $.get(httpsify('https://launcher.buildandshoot.com/update?json=true'), function (response) {
         for(var i = 0; i < response.length; i++) {    
             var update = response[i];
             if (update.url.endsWith(".exe")) {
