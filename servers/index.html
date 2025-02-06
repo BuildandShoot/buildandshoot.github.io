@@ -147,7 +147,7 @@ js:
 
                         <div class="form-group">
                             <label for="direct-url">Server URL</label>
-                            <input class="form-control" id="direct-url" placeholder="Enter Server URL (eg: aos://16777343:32887:0.75)" type="text">
+                            <input class="form-control" id="direct-url" placeholder="Enter Server URL (eg: aos://16777343:32887)" type="text">
                         </div>
      
                         <button type="button" id="direct-connect-url" class="btn btn-success block-btn"><i class="fa fa-play"></i> Connect</button>
@@ -173,12 +173,14 @@ js:
                                     <input type="number" min="1" max="65535" class="form-control" id="direct-port" value="32887" placeholder="Port">
                                 </div>
                             </div>
+                            <!--- FIX: Remove version from direct connect - https://issues.chromium.org/issues/375228139
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="direct-versions">Game Version:</label>
                                     <select id="direct-versions" class="form-control server-filter" data-width="100%"></select>
                                 </div>
                             </div>
+                            --->
                             <div class="col-sm-6">
                                 <br />
                                 <button type="button" id="direct-connect-ip" class="btn btn-success block-btn"><i class="fa fa-play"></i> Connect</button>
@@ -395,7 +397,9 @@ function createServerRow(server) {
         country_name : getCountryName(server.country),
         game_version : server.game_version,
         link: function() {
-            return server.identifier + ":" + server.game_version;
+            //return server.identifier + ":" + server.game_version;
+            // FIX: Remove version from link - https://issues.chromium.org/issues/375228139
+            return server.identifier;
         }
     };
 
@@ -535,7 +539,9 @@ $("#direct-connect-ip").click(function(){
    var port = $("#direct-port").val();
 
    if (isIP(ip) && isValidPort(port)) {
-        var version = $("#direct-versions").val();;
+        //var version = $("#direct-versions").val();
+        // FIX: Remove version from direct connect - https://issues.chromium.org/issues/375228139
+        var version = null;
         var url = ip2aos(ip, port, version);
         launchGame(url);
    } else {
